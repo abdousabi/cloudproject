@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask_redis import FlaskRedis
 
 app = Flask(__name__)
-app.config['REDIS_URL'] = 'redis://localhost:6379/0'  # Spécifiez l'URL de connexion à Redis
+app.config['REDIS_URL'] = 'redis://localhost:6379/0'  #connexion à Redis
 redis = FlaskRedis(app)
 CORS(app)  
 
@@ -67,7 +67,6 @@ def retweet():
     tweet_content = request.json['content']
     tweets = redis.lrange('tweets', 0, -1)
 
-    # Recherchez le tweet avec le contenu correspondant
     for tweet in tweets:
         tweet = json.loads(tweet)
         if tweet['content'] == tweet_content:
