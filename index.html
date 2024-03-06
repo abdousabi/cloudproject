@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Redis Tweets</title>
+    <script src="index.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #98FB98; /* Vert pistache */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #7FFF00; /* Vert clair lors du survol */
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flask Redis Tweets</h1>
+
+    <!-- Section pour créer un nouveau tweet -->
+    <div class="form-section">
+        <h2>Créer un nouveau tweet</h2>
+        <form id="tweetForm">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="subject">Sujet:</label>
+            <input type="text" id="subject" name="subject" required><br>
+            
+            <label for="content">Contenu:</label>
+            <textarea id="content" name="content" required></textarea><br>
+            
+            <div class="button-container">
+                <button type="submit">Envoyer</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Section pour afficher les tweets par utilisateur -->
+    <div class="form-section">
+        <h2>Tweets par utilisateur</h2>
+        <label for="userForTweets">Nom d'utilisateur:</label>
+        <input type="text" id="userForTweets" name="userForTweets" required>
+        <button onclick="getTweetsByUsername()">Rechercher</button>
+        <div id="userTweets"></div>
+    </div>
+
+    <!-- Section pour afficher les tweets par sujet -->
+    <div class="form-section">
+        <h2>Tweets par sujet</h2>
+        <label for="subjectForTweets">Sujet:</label>
+        <input type="text" id="subjectForTweets" name="subjectForTweets" required>
+        <button onclick="getTweetsBySubject()">Rechercher</button>
+        <div id="subjectTweets"></div>
+    </div>
+
+    <!-- Section pour retweeter un tweet -->
+    <div class="form-section">
+        <h2>Retweeter un tweet</h2>
+        <label for="tweetContent">contenu du tweet:</label>
+        <input type="text" id="tweetContent" name="tweetContent" required>
+        <div class="button-container">
+            <button onclick="retweet()">Retweeter</button>
+        </div>
+    </div>
+
+    <!-- Section pour afficher tous les noms d'utilisateur -->
+    <div class="form-section">
+        <h2>Tous les noms d'utilisateur</h2>
+        <div id="usernames"></div>
+        <div class="button-container">
+            <button onclick="getAllUsernames()">Récupérer tous les noms d'utilisateur</button>
+        </div>
+    </div>
+
+    <!-- Section pour afficher tous les sujets -->
+    <div class="form-section">
+        <h2>Tous les sujets</h2>
+        <div id="subjects"></div>
+        <div class="button-container">
+            <button onclick="getAllSubjects()">Récupérer tous les sujets</button>
+        </div>
+    </div>
+
+</body>
+</html>
