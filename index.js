@@ -130,5 +130,5 @@ function displaySubjects(subjects) {
         subjectList.appendChild(subjectItem); // Ajouter l'élément de liste à la liste non ordonnée
     });
 
-    subjectsContainer.appendChild(subjectList); // Ajouter la liste non ordonnée à la section des sujets
+    subjectsContainer.appendChild(subjectList); 
 }
