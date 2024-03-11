@@ -18,11 +18,19 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: pip install -r .github/workflows/requirements.txt
 
       - name: Check Python syntax
         run: find . -name '*.py' -type f -exec python -m py_compile {} +
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' 
+
+      - name: Install ESLint
+        run: npm install -g eslint
 
       - name: Check JavaScript syntax
         run: eslint .
@@ -32,5 +40,5 @@ jobs:
 
       - name: Run API Integrity Check
         run: |
-         
-          curl http://localhost:5000 
+          # Replace "http://localhost:5000" with the actual URL of your API
+          curl http://localhost:5000 # Example of API endpoint
