@@ -10,31 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
 
-  - name: Install dependencies
-  
-  run: pip install -r workflows/requirements.txt
+      - name: Install dependencies
+        run: pip install -r .github/workflows/requirements.txt
 
-    - name: Check Python syntax
-      run: |
-        find . -name '*.py' -type f -exec python -m py_compile {} +
-      
-    - name: Check JavaScript syntax
-      run: |
-        eslint .
+      - name: Check Python syntax
+        run: find . -name '*.py' -type f -exec python -m py_compile {} +
 
-    - name: Start API
-      run: |
-        python app.py &
+      - name: Check JavaScript syntax
+        run: eslint .
 
-    - name: Run API Integrity Check
-      run: |
-        # Replace "http://localhost:5000" with the actual URL of your API
-        curl http://localhost:5000 # Example of API endpoint
+      - name: Start API
+        run: python app.py &
+
+      - name: Run API Integrity Check
+        run: |
+         
+          curl http://localhost:5000 
