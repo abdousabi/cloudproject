@@ -9,6 +9,12 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -19,12 +25,10 @@ jobs:
           node-version: '14'
           
       - name: Install Node.js Dependencies
-        run: |
-          npm install
+        run: npm install
           
       - name: Run ESLint
-        run: |
-          npx eslint .
+        run: npx eslint .
           
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -32,18 +36,13 @@ jobs:
           python-version: 3.9
           
       - name: Install Python Dependencies
-        run: |
-          pip install -r .github/workflows/requirements.txt
+        run: pip install -r .github/workflows/requirements.txt
           
       - name: Check Python Syntax
-        run: |
-          find . -name '*.py' -type f -exec python -m py_compile {} +
+        run: find . -name '*.py' -type f -exec python -m py_compile {} +
           
       - name: Start API
-        run: |
-          python app.py &
+        run: python app.py &
           
       - name: Run API Integrity Check
-        run: |
-          curl http://localhost:5000 # Remplacez ceci par l'URL réelle de votre API si différente
-
+        run: curl http://localhost:5000
