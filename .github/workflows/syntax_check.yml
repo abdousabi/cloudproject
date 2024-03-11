@@ -1,4 +1,4 @@
-name: Syntax Check and API Integrity
+name: Complete Build and Test Workflow
 
 on:
   push:
@@ -6,47 +6,44 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
-
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Install Node.js Dependencies
+        run: |
+          npm install
+          
+      - name: Run ESLint
+        run: |
+          npx eslint .
+          
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-
-      - name: Install Python dependencies
-        run: pip install -r .github/workflows/requirements.txt
-
-      - name: Check Python syntax
-        run: find . -name '*.py' -type f -exec python -m py_compile {} +
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14' # Adjust this to your project's Node.js version
-
-      - name: Install Node.js dependencies and ESLint
+          
+      - name: Install Python Dependencies
         run: |
-          npm install
-          npm install eslint --save-dev
-
-      - name: Set up ESLint configuration
+          pip install -r .github/workflows/requirements.txt
+          
+      - name: Check Python Syntax
         run: |
-          if [ ! -f .eslintrc.json ]; then
-            npx eslint --init
-          fi
-
-      - name: Check JavaScript syntax
-        run: npx eslint .
-
+          find . -name '*.py' -type f -exec python -m py_compile {} +
+          
       - name: Start API
-        run: python app.py &
-
+        run: |
+          python app.py &
+          
       - name: Run API Integrity Check
         run: |
-          # Replace "http://localhost:5000" with the actual URL of your API
-          curl http://localhost:5000 # Example of API endpoint
+          curl http://localhost:5000 # Remplacez ceci par l'URL réelle de votre API si différente
+
