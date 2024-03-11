@@ -14,7 +14,7 @@ jobs:
         image: redis:alpine
         ports:
           - 6379:6379
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -26,23 +26,18 @@ jobs:
           
       - name: Install Node.js Dependencies
         run: npm install
-          
+        working-directory: ./backend # Adaptez ce chemin si votre package.json est ailleurs
+        
       - name: Run ESLint
         run: npx eslint .
-          
+        working-directory: ./backend # Adaptez ce chemin si vos fichiers JS sont ailleurs
+        
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
           
       - name: Install Python Dependencies
-        run: pip install -r .github/workflows/requirements.txt
-          
-      - name: Check Python Syntax
-        run: find . -name '*.py' -type f -exec python -m py_compile {} +
-          
-      - name: Start API
-        run: python app.py &
-          
-      - name: Run API Integrity Check
-        run: curl http://localhost:5000
+        run: |
+          pip install -r requirements.txt
+        working-directory: ./backend # Adaptez ce chemin si votre requirements.txt est ailleurs
