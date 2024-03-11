@@ -18,10 +18,9 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-        npm install
+  - name: Install dependencies
+  
+  run: pip install -r workflows/requirements.txt
 
     - name: Check Python syntax
       run: |
