@@ -26,11 +26,11 @@ jobs:
           
       - name: Install Node.js Dependencies
         run: npm install
-        working-directory: ./backend # Adaptez ce chemin si votre package.json est ailleurs
+        working-directory: ./frontend
         
       - name: Run ESLint
         run: npx eslint .
-        working-directory: ./backend # Adaptez ce chemin si vos fichiers JS sont ailleurs
+        working-directory: ./frontend
         
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -40,4 +40,20 @@ jobs:
       - name: Install Python Dependencies
         run: |
           pip install -r requirements.txt
-        working-directory: ./backend # Adaptez ce chemin si votre requirements.txt est ailleurs
+        working-directory: ./backend
+        
+      - name: Check Python Syntax
+        run: |
+          find . -name '*.py' -type f -exec python -m py_compile {} +
+        working-directory: ./backend
+          
+      - name: Start API
+        run: |
+          nohup python app.py &
+        working-directory: ./backend
+        
+      - name: Run API Integrity Check
+        run: |
+          sleep 10 # Donne un peu de temps à Flask pour démarrer
+          curl http://localhost:5000
+        working-directory: ./backend
