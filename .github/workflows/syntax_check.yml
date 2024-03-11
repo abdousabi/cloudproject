@@ -54,6 +54,6 @@ jobs:
         
       - name: Run API Integrity Check
         run: |
-          sleep 10 # Donne un peu de temps à Flask pour démarrer
+          sleep 10 
           curl http://localhost:5000
         working-directory: ./backend
