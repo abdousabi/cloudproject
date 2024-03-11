@@ -20,8 +20,7 @@ module.exports = {
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    {
-  "rules": {
-    "no-unused-vars": "off"
-  }
-}
+    "rules": {
+        "no-unused-vars": "off"
+    }
+};
